@@ -20,16 +20,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="createTime" column="create_time" />
 		<result property="updateBy"   column="update_by"   />
 		<result property="updateTime" column="update_time" />
+		<result property="description" column="description" />
 	</resultMap>
 	
 	<sql id="selectDeptVo">
         select d.dept_id, d.parent_id, d.ancestors, d.dept_name, d.order_num, d.leader, d.phone, d.email, d.status, d.del_flag, d.create_by, d.create_time 
         from sys_dept d
     </sql>
+
+	<sql id="selectDeptVo1">
+        select d.dept_id, d.parent_id, d.ancestors, d.dept_name, d.order_num, d.leader, d.phone, d.email, d.status, d.del_flag, d.create_by, d.create_time, n.description
+        from sys_dept d,t_medical_base_nature n
+    </sql>
     
 	<select id="selectDeptList" parameterType="SysDept" resultMap="SysDeptResult">
-        <include refid="selectDeptVo"/>
-        where d.del_flag = '0'
+        <include refid="selectDeptVo1"/>
+        where d.natureId = n.natureId AND d.del_flag = '0'
 		<if test="deptId != null and deptId != 0">
 			AND dept_id = #{deptId}
 		</if>

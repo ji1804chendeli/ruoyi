@@ -141,9 +141,9 @@
 
         <el-table v-loading="loading" :data="userList" @selection-change="handleSelectionChange">
           <el-table-column type="selection" width="50" align="center" />
-          <el-table-column label="用户编号" align="center" key="userId" prop="userId" v-if="columns[0].visible" />
-          <el-table-column label="用户名称" align="center" key="userName" prop="userName" v-if="columns[1].visible" :show-overflow-tooltip="true" />
-          <el-table-column label="用户昵称" align="center" key="nickName" prop="nickName" v-if="columns[2].visible" :show-overflow-tooltip="true" />
+          <el-table-column label="人员编号" align="center" key="userId" prop="userId" v-if="columns[0].visible" />
+          <el-table-column label="人员名称" align="center" key="userName" prop="userName" v-if="columns[1].visible" :show-overflow-tooltip="true" />
+          <el-table-column label="人员昵称" align="center" key="nickName" prop="nickName" v-if="columns[2].visible" :show-overflow-tooltip="true" />
           <el-table-column label="部门" align="center" key="deptName" prop="dept.deptName" v-if="columns[3].visible" :show-overflow-tooltip="true" />
           <el-table-column label="手机号码" align="center" key="phonenumber" prop="phonenumber" v-if="columns[4].visible" width="120" />
           <el-table-column label="状态" align="center" key="status" v-if="columns[5].visible">
@@ -161,6 +161,7 @@
               <span>{{ parseTime(scope.row.createTime) }}</span>
             </template>
           </el-table-column>
+		  <el-table-column label="工作性质" align="center" key="name" prop="name" v-if="columns[7].visible" :show-overflow-tooltip="true" />
           <el-table-column
             label="操作"
             align="center"
@@ -273,14 +274,13 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="岗位">
-              <el-select v-model="form.postIds" multiple placeholder="请选择">
+            <el-form-item label="工作性质" prop="natureId">
+              <el-select v-model="form.natureId" placeholder="请选择">
                 <el-option
                   v-for="item in postOptions"
-                  :key="item.postId"
-                  :label="item.postName"
-                  :value="item.postId"
-                  :disabled="item.status == 1"
+                  :key="item.natureid"
+                  :label="item.name"
+                  :value="item.natureid"
                 ></el-option>
               </el-select>
             </el-form-item>
@@ -428,7 +428,8 @@ export default {
         { key: 3, label: `部门`, visible: true },
         { key: 4, label: `手机号码`, visible: true },
         { key: 5, label: `状态`, visible: true },
-        { key: 6, label: `创建时间`, visible: true }
+        { key: 6, label: `创建时间`, visible: true },
+				{ key: 7, label: `工作性质`, visible: true }
       ],
       // 表单校验
       rules: {
@@ -456,6 +457,9 @@ export default {
             message: "请输入正确的手机号码",
             trigger: "blur"
           }
+        ],
+        natureId:[
+          { required: true, message: "人员岗位不能为空", trigger: "blur" }
         ]
       }
     };
@@ -590,6 +594,7 @@ export default {
         this.open = true;
         this.title = "修改用户";
         this.form.password = "";
+        // console.log(response.data);
       });
     },
     /** 重置密码按钮操作 */

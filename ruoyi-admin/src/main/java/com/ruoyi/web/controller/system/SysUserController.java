@@ -2,6 +2,8 @@ package com.ruoyi.web.controller.system;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.ruoyi.common.service.ITMedicalBaseNatureService;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,7 +28,6 @@ import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.system.service.ISysPostService;
 import com.ruoyi.system.service.ISysRoleService;
 import com.ruoyi.system.service.ISysUserService;
 
@@ -45,8 +46,11 @@ public class SysUserController extends BaseController
     @Autowired
     private ISysRoleService roleService;
 
+//    @Autowired
+//    private ISysPostService postService;
+
     @Autowired
-    private ISysPostService postService;
+    private ITMedicalBaseNatureService tmedicalBaseNatureService;
 
     /**
      * 获取用户列表
@@ -100,11 +104,11 @@ public class SysUserController extends BaseController
         AjaxResult ajax = AjaxResult.success();
         List<SysRole> roles = roleService.selectRoleAll();
         ajax.put("roles", SysUser.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
-        ajax.put("posts", postService.selectPostAll());
+        ajax.put("posts", tmedicalBaseNatureService.listPerson(null));
         if (StringUtils.isNotNull(userId))
         {
             ajax.put(AjaxResult.DATA_TAG, userService.selectUserById(userId));
-            ajax.put("postIds", postService.selectPostListByUserId(userId));
+//            ajax.put("postIds", postService.selectPostListByUserId(userId));
             ajax.put("roleIds", roleService.selectRoleListByUserId(userId));
         }
         return ajax;

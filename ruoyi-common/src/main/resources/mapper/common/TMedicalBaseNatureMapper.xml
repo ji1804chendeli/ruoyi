@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.common.mapper.TMedicalBaseNatureMapper">
+    
+    <resultMap type="TMedicalBaseNature" id="TMedicalBaseNatureResult">
+        <result property="natureid"    column="natureId"    />
+        <result property="name"    column="name"    />
+        <result property="description"    column="description"    />
+        <result property="typename"    column="typeName"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTMedicalBaseNatureVo">
+        select natureId, name, description, typeName, remark from t_medical_base_nature
+    </sql>
+
+    <select id="selectTMedicalBaseNatureList" parameterType="TMedicalBaseNature" resultMap="TMedicalBaseNatureResult">
+        <include refid="selectTMedicalBaseNatureVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="description != null  and description != ''"> and description = #{description}</if>
+            <if test="typename != null  and typename != ''"> and typeName like concat('%', #{typename}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectTMedicalBaseNatureByNatureid" parameterType="Integer" resultMap="TMedicalBaseNatureResult">
+        <include refid="selectTMedicalBaseNatureVo"/>
+        where natureId = #{natureid}
+    </select>
+    <select id="listPerson" parameterType="com.ruoyi.common.domain.TMedicalBaseNature" resultMap="TMedicalBaseNatureResult">
+       <include refid="selectTMedicalBaseNatureVo"/> where typeName = '人员'
+
+    </select>
+
+    <insert id="insertTMedicalBaseNature" parameterType="TMedicalBaseNature">
+        insert into t_medical_base_nature
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="natureid != null">natureId,</if>
+            <if test="name != null">name,</if>
+            <if test="description != null">description,</if>
+            <if test="typename != null">typeName,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="natureid != null">#{natureid},</if>
+            <if test="name != null">#{name},</if>
+            <if test="description != null">#{description},</if>
+            <if test="typename != null">#{typename},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTMedicalBaseNature" parameterType="TMedicalBaseNature">
+        update t_medical_base_nature
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="typename != null">typeName = #{typename},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where natureId = #{natureid}
+    </update>
+
+    <delete id="deleteTMedicalBaseNatureByNatureid" parameterType="Integer">
+        delete from t_medical_base_nature where natureId = #{natureid}
+    </delete>
+
+    <delete id="deleteTMedicalBaseNatureByNatureids" parameterType="String">
+        delete from t_medical_base_nature where natureId in 
+        <foreach item="natureid" collection="array" open="(" separator="," close=")">
+            #{natureid}
+        </foreach>
+    </delete>
+</mapper>

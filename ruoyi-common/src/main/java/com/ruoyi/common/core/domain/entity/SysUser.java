@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -83,6 +84,9 @@ public class SysUser extends BaseEntity
     })
     private SysDept dept;
 
+    /** 工作性质名称 */
+    private String name;
+
     /** 角色对象 */
     private List<SysRole> roles;
 
@@ -95,9 +99,28 @@ public class SysUser extends BaseEntity
     /** 角色ID */
     private Long roleId;
 
+    /** 工作性质id */
+    private Integer natureId;
+
     public SysUser()
     {
 
+    }
+
+    public Integer getNatureId() {
+        return natureId;
+    }
+
+    public void setNatureId(Integer natureId) {
+        this.natureId = natureId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public SysUser(Long userId)

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.TMedicalBaseGroupSchedulerMapper">
+    
+    <resultMap type="TMedicalBaseGroupScheduler" id="TMedicalBaseGroupSchedulerResult">
+        <result property="groupschedulerid"    column="groupSchedulerId"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="mondaymorning"    column="mondayMorning"    />
+        <result property="mondayafternoon"    column="mondayAfternoon"    />
+        <result property="tuesdaymorning"    column="tuesdayMorning"    />
+        <result property="tuesdayafternoon"    column="tuesdayAfternoon"    />
+        <result property="wednesdaymorning"    column="wednesdayMorning"    />
+        <result property="wednesdayafternoon"    column="wednesdayAfternoon"    />
+        <result property="thursdaymorning"    column="thursdayMorning"    />
+        <result property="thursdayafternoon"    column="thursdayAfternoon"    />
+        <result property="fridaymorning"    column="fridayMorning"    />
+        <result property="fridayafternoon"    column="fridayAfternoon"    />
+        <result property="saturdaymorning"    column="saturdayMorning"    />
+        <result property="saturdayafternoon"    column="saturdayAfternoon"    />
+        <result property="sundaymorning"    column="sundayMorning"    />
+        <result property="sundayafternoon"    column="sundayAfternoon"    />
+        <result property="createtimes"    column="createTimes"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+
+    <sql id="selectTMedicalBaseGroupSchedulerVo">
+        select groupSchedulerId, dept_id, mondayMorning, mondayAfternoon, tuesdayMorning, tuesdayAfternoon, wednesdayMorning, wednesdayAfternoon, thursdayMorning, thursdayAfternoon, fridayMorning, fridayAfternoon, saturdayMorning, saturdayAfternoon, sundayMorning, sundayAfternoon, createTimes, remarks, status from t_medical_base_group_scheduler
+    </sql>
+
+    <select id="selectTMedicalBaseGroupSchedulerList" parameterType="TMedicalBaseGroupScheduler" resultMap="TMedicalBaseGroupSchedulerResult">
+        <include refid="selectTMedicalBaseGroupSchedulerVo"/>
+        <where>  
+            <if test="deptId != null "> and dept_id = #{deptId}</if>
+            <if test="mondaymorning != null  and mondaymorning != ''"> and mondayMorning = #{mondaymorning}</if>
+            <if test="mondayafternoon != null  and mondayafternoon != ''"> and mondayAfternoon = #{mondayafternoon}</if>
+            <if test="tuesdaymorning != null  and tuesdaymorning != ''"> and tuesdayMorning = #{tuesdaymorning}</if>
+            <if test="tuesdayafternoon != null  and tuesdayafternoon != ''"> and tuesdayAfternoon = #{tuesdayafternoon}</if>
+            <if test="wednesdaymorning != null  and wednesdaymorning != ''"> and wednesdayMorning = #{wednesdaymorning}</if>
+            <if test="wednesdayafternoon != null  and wednesdayafternoon != ''"> and wednesdayAfternoon = #{wednesdayafternoon}</if>
+            <if test="thursdaymorning != null  and thursdaymorning != ''"> and thursdayMorning = #{thursdaymorning}</if>
+            <if test="thursdayafternoon != null  and thursdayafternoon != ''"> and thursdayAfternoon = #{thursdayafternoon}</if>
+            <if test="fridaymorning != null  and fridaymorning != ''"> and fridayMorning = #{fridaymorning}</if>
+            <if test="fridayafternoon != null  and fridayafternoon != ''"> and fridayAfternoon = #{fridayafternoon}</if>
+            <if test="saturdaymorning != null  and saturdaymorning != ''"> and saturdayMorning = #{saturdaymorning}</if>
+            <if test="saturdayafternoon != null  and saturdayafternoon != ''"> and saturdayAfternoon = #{saturdayafternoon}</if>
+            <if test="sundaymorning != null  and sundaymorning != ''"> and sundayMorning = #{sundaymorning}</if>
+            <if test="sundayafternoon != null  and sundayafternoon != ''"> and sundayAfternoon = #{sundayafternoon}</if>
+            <if test="createtimes != null "> and createTimes = #{createtimes}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="status != null "> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectTMedicalBaseGroupSchedulerByGroupschedulerid" parameterType="String" resultMap="TMedicalBaseGroupSchedulerResult">
+        <include refid="selectTMedicalBaseGroupSchedulerVo"/>
+        where groupSchedulerId = #{groupschedulerid}
+    </select>
+        
+    <insert id="insertTMedicalBaseGroupScheduler" parameterType="TMedicalBaseGroupScheduler">
+        insert into t_medical_base_group_scheduler
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="groupschedulerid != null">groupSchedulerId,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="mondaymorning != null">mondayMorning,</if>
+            <if test="mondayafternoon != null">mondayAfternoon,</if>
+            <if test="tuesdaymorning != null">tuesdayMorning,</if>
+            <if test="tuesdayafternoon != null">tuesdayAfternoon,</if>
+            <if test="wednesdaymorning != null">wednesdayMorning,</if>
+            <if test="wednesdayafternoon != null">wednesdayAfternoon,</if>
+            <if test="thursdaymorning != null">thursdayMorning,</if>
+            <if test="thursdayafternoon != null">thursdayAfternoon,</if>
+            <if test="fridaymorning != null">fridayMorning,</if>
+            <if test="fridayafternoon != null">fridayAfternoon,</if>
+            <if test="saturdaymorning != null">saturdayMorning,</if>
+            <if test="saturdayafternoon != null">saturdayAfternoon,</if>
+            <if test="sundaymorning != null">sundayMorning,</if>
+            <if test="sundayafternoon != null">sundayAfternoon,</if>
+            <if test="createtimes != null">createTimes,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="status != null">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="groupschedulerid != null">#{groupschedulerid},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="mondaymorning != null">#{mondaymorning},</if>
+            <if test="mondayafternoon != null">#{mondayafternoon},</if>
+            <if test="tuesdaymorning != null">#{tuesdaymorning},</if>
+            <if test="tuesdayafternoon != null">#{tuesdayafternoon},</if>
+            <if test="wednesdaymorning != null">#{wednesdaymorning},</if>
+            <if test="wednesdayafternoon != null">#{wednesdayafternoon},</if>
+            <if test="thursdaymorning != null">#{thursdaymorning},</if>
+            <if test="thursdayafternoon != null">#{thursdayafternoon},</if>
+            <if test="fridaymorning != null">#{fridaymorning},</if>
+            <if test="fridayafternoon != null">#{fridayafternoon},</if>
+            <if test="saturdaymorning != null">#{saturdaymorning},</if>
+            <if test="saturdayafternoon != null">#{saturdayafternoon},</if>
+            <if test="sundaymorning != null">#{sundaymorning},</if>
+            <if test="sundayafternoon != null">#{sundayafternoon},</if>
+            <if test="createtimes != null">#{createtimes},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="status != null">#{status},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTMedicalBaseGroupScheduler" parameterType="TMedicalBaseGroupScheduler">
+        update t_medical_base_group_scheduler
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="mondaymorning != null">mondayMorning = #{mondaymorning},</if>
+            <if test="mondayafternoon != null">mondayAfternoon = #{mondayafternoon},</if>
+            <if test="tuesdaymorning != null">tuesdayMorning = #{tuesdaymorning},</if>
+            <if test="tuesdayafternoon != null">tuesdayAfternoon = #{tuesdayafternoon},</if>
+            <if test="wednesdaymorning != null">wednesdayMorning = #{wednesdaymorning},</if>
+            <if test="wednesdayafternoon != null">wednesdayAfternoon = #{wednesdayafternoon},</if>
+            <if test="thursdaymorning != null">thursdayMorning = #{thursdaymorning},</if>
+            <if test="thursdayafternoon != null">thursdayAfternoon = #{thursdayafternoon},</if>
+            <if test="fridaymorning != null">fridayMorning = #{fridaymorning},</if>
+            <if test="fridayafternoon != null">fridayAfternoon = #{fridayafternoon},</if>
+            <if test="saturdaymorning != null">saturdayMorning = #{saturdaymorning},</if>
+            <if test="saturdayafternoon != null">saturdayAfternoon = #{saturdayafternoon},</if>
+            <if test="sundaymorning != null">sundayMorning = #{sundaymorning},</if>
+            <if test="sundayafternoon != null">sundayAfternoon = #{sundayafternoon},</if>
+            <if test="createtimes != null">createTimes = #{createtimes},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="status != null">status = #{status},</if>
+        </trim>
+        where groupSchedulerId = #{groupschedulerid}
+    </update>
+
+    <delete id="deleteTMedicalBaseGroupSchedulerByGroupschedulerid" parameterType="String">
+        delete from t_medical_base_group_scheduler where groupSchedulerId = #{groupschedulerid}
+    </delete>
+
+    <delete id="deleteTMedicalBaseGroupSchedulerByGroupschedulerids" parameterType="String">
+        delete from t_medical_base_group_scheduler where groupSchedulerId in 
+        <foreach item="groupschedulerid" collection="array" open="(" separator="," close=")">
+            #{groupschedulerid}
+        </foreach>
+    </delete>
+</mapper>

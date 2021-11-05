@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.TMedicalBaseUserSchedulerMapper">
+    
+    <resultMap type="TMedicalBaseUserScheduler" id="TMedicalBaseUserSchedulerResult">
+        <result property="userschedulerid"    column="userSchedulerId"    />
+        <result property="userId"    column="user_id"    />
+        <result property="restdate"    column="restDate"    />
+        <result property="datedetail"    column="dateDetail"    />
+        <result property="groupschedulerid"    column="groupSchedulerId"    />
+        <result property="remarks"    column="remarks"    />
+    </resultMap>
+
+    <sql id="selectTMedicalBaseUserSchedulerVo">
+        select userSchedulerId, user_id, restDate, dateDetail, groupSchedulerId, remarks from t_medical_base_user_scheduler
+    </sql>
+
+    <select id="selectTMedicalBaseUserSchedulerList" parameterType="TMedicalBaseUserScheduler" resultMap="TMedicalBaseUserSchedulerResult">
+        <include refid="selectTMedicalBaseUserSchedulerVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="restdate != null "> and restDate = #{restdate}</if>
+            <if test="datedetail != null "> and dateDetail = #{datedetail}</if>
+            <if test="groupschedulerid != null  and groupschedulerid != ''"> and groupSchedulerId = #{groupschedulerid}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+        </where>
+    </select>
+    
+    <select id="selectTMedicalBaseUserSchedulerByUserschedulerid" parameterType="String" resultMap="TMedicalBaseUserSchedulerResult">
+        <include refid="selectTMedicalBaseUserSchedulerVo"/>
+        where userSchedulerId = #{userschedulerid}
+    </select>
+        
+    <insert id="insertTMedicalBaseUserScheduler" parameterType="TMedicalBaseUserScheduler">
+        insert into t_medical_base_user_scheduler
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userschedulerid != null">userSchedulerId,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="restdate != null">restDate,</if>
+            <if test="datedetail != null">dateDetail,</if>
+            <if test="groupschedulerid != null">groupSchedulerId,</if>
+            <if test="remarks != null">remarks,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userschedulerid != null">#{userschedulerid},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="restdate != null">#{restdate},</if>
+            <if test="datedetail != null">#{datedetail},</if>
+            <if test="groupschedulerid != null">#{groupschedulerid},</if>
+            <if test="remarks != null">#{remarks},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTMedicalBaseUserScheduler" parameterType="TMedicalBaseUserScheduler">
+        update t_medical_base_user_scheduler
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="restdate != null">restDate = #{restdate},</if>
+            <if test="datedetail != null">dateDetail = #{datedetail},</if>
+            <if test="groupschedulerid != null">groupSchedulerId = #{groupschedulerid},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+        </trim>
+        where userSchedulerId = #{userschedulerid}
+    </update>
+
+    <delete id="deleteTMedicalBaseUserSchedulerByUserschedulerid" parameterType="String">
+        delete from t_medical_base_user_scheduler where userSchedulerId = #{userschedulerid}
+    </delete>
+
+    <delete id="deleteTMedicalBaseUserSchedulerByUserschedulerids" parameterType="String">
+        delete from t_medical_base_user_scheduler where userSchedulerId in 
+        <foreach item="userschedulerid" collection="array" open="(" separator="," close=")">
+            #{userschedulerid}
+        </foreach>
+    </delete>
+</mapper>

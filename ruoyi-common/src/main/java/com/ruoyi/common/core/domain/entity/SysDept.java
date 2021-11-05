@@ -5,6 +5,9 @@ import java.util.List;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
+import jdk.nashorn.internal.objects.annotations.Getter;
+import jdk.nashorn.internal.objects.annotations.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.core.domain.BaseEntity;
@@ -50,9 +53,20 @@ public class SysDept extends BaseEntity
 
     /** 父部门名称 */
     private String parentName;
+
+    /** 部门工作性质描述 */
+    private String description;
+
     
     /** 子部门 */
     private List<SysDept> children = new ArrayList<SysDept>();
+
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public Long getDeptId()
     {
